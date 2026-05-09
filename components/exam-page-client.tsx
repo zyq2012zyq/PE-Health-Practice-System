@@ -13,6 +13,9 @@ import {
   calculateScore,
   saveExamResult,
   EXAM_CHOICE_COUNT,
+  EXAM_DURATION_SECONDS,
+  EXAM_DURATION_MINUTES,
+  EXAM_TIME_CRITICAL_SECONDS,
 } from "@/lib/exam-utils"
 import type { Question, ExamMode } from "@/lib/types"
 import {
@@ -46,7 +49,7 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<number, string>>({})
   const [showResult, setShowResult] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(mode === "exam" ? 30 * 60 : 0)
+  const [timeLeft, setTimeLeft] = useState(mode === "exam" ? EXAM_DURATION_SECONDS : 0)
   const [showSubmitDialog, setShowSubmitDialog] = useState(false)
   const [showTimeUpDialog, setShowTimeUpDialog] = useState(false)
   const [showExitDialog, setShowExitDialog] = useState(false)
@@ -105,7 +108,7 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
     let examQuestions: Question[] = []
     if (mode === "exam") {
       examQuestions = generateExam(choiceQuestions, judgeQuestions)
-      setTimeLeft(30 * 60)
+      setTimeLeft(EXAM_DURATION_SECONDS)
     } else if (mode === "choice") {
       examQuestions = [...choiceQuestions].sort(() => Math.random() - 0.5)
     } else {
@@ -154,13 +157,13 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
             <h1 className="text-2xl font-bold">{modeLabels[mode]}</h1>
             <p className="text-muted-foreground">
               {mode === "exam"
-                ? `共 ${questions.length} 题：先 ${EXAM_CHOICE_COUNT} 道单选题，再 ${questions.length - EXAM_CHOICE_COUNT} 道判断题；限时 30 分钟`
+                ? `共 ${questions.length} 题：先 ${EXAM_CHOICE_COUNT} 道单选题，再 ${questions.length - EXAM_CHOICE_COUNT} 道判断题；限时 ${EXAM_DURATION_MINUTES} 分钟`
                 : `共 ${questions.length} 题`}
             </p>
           </div>
           <div className="flex items-center gap-4">
             {mode === "exam" && !showResult && (
-              <div className={`flex items-center gap-2 rounded-lg px-4 py-2 font-mono text-lg ${timeLeft <= 300 ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" : "bg-muted"}`}>
+              <div className={`flex items-center gap-2 rounded-lg px-4 py-2 font-mono text-lg ${timeLeft <= EXAM_TIME_CRITICAL_SECONDS ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" : "bg-muted"}`}>
                 <Timer className="h-5 w-5" />
                 {formatTime(timeLeft)}
               </div>

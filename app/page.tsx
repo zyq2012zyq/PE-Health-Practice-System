@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { 
   Clock, 
   FileText, 
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
+import { EXAM_DURATION_MINUTES } from '@/lib/exam-utils'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function HomePage() {
@@ -35,12 +37,14 @@ export default function HomePage() {
       <nav className="sticky top-0 z-50 border-b border-border/50 glass">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 rounded-xl blur-lg group-hover:blur-xl transition-all" />
-              <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg">
-                <BookOpen className="h-5 w-5 text-primary-foreground" />
-              </div>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="体育与健康知识在线练习"
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-border shadow-sm transition-shadow group-hover:shadow-md"
+              priority
+            />
             <span className="font-bold text-lg text-foreground">体育健康知识</span>
           </Link>
           <div className="flex items-center gap-2">
@@ -134,7 +138,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <h3 className="font-semibold text-lg mb-2 text-foreground">考试时间</h3>
-                <p className="text-4xl font-bold text-primary mb-2">30 分钟</p>
+                <p className="text-4xl font-bold text-primary mb-2">{EXAM_DURATION_MINUTES} 分钟</p>
                 <p className="text-sm text-muted-foreground">倒计时结束自动交卷</p>
               </CardContent>
             </Card>
@@ -282,9 +286,12 @@ export default function HomePage() {
       <footer className="border-t border-border/50 bg-card/50">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <BookOpen className="h-4 w-4" />
-              <span>体育与健康知识在线练习系统</span>
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4 shrink-0" />
+                体育与健康知识在线练习系统
+              </span>
+              <span className="text-muted-foreground/80">作者：张祐齐</span>
             </div>
             <p className="text-sm text-muted-foreground">
               北京市初中学业水平考试模拟

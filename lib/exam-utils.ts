@@ -14,6 +14,12 @@ function shuffle<T>(array: T[]): T[] {
 export const EXAM_CHOICE_COUNT = 10
 export const EXAM_JUDGE_COUNT = 10
 
+/** 模拟考试时长 */
+export const EXAM_DURATION_MINUTES = 10
+export const EXAM_DURATION_SECONDS = EXAM_DURATION_MINUTES * 60
+/** 剩余时间不多于此秒数时，倒计时高亮提示（约占总时长 1/5） */
+export const EXAM_TIME_CRITICAL_SECONDS = Math.floor(EXAM_DURATION_SECONDS / 5)
+
 export function generateExam(
   choiceQuestions: Question[],
   judgeQuestions: Question[]
