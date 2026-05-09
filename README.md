@@ -1,0 +1,2 @@
+# PE Health Practice System
+Sports & Health Online Practice System is an intelligent online learning platform designed for physical education and health knowledge training. The system provides timed quizzes, multiple-choice questions, true-or-false exercises, and instant score feedback to help students improve their understanding of sports and health knowledge efficiently. With a clean interface and convenient online access, it creates a modern and interactive learning experience for students.
