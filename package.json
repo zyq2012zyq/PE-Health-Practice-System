@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "sync:exam-bank": "node scripts/parse-exam-paper.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",

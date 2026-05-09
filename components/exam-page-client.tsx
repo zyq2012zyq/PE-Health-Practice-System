@@ -8,7 +8,12 @@ import { Header } from "@/components/header"
 import { QuestionCard } from "@/components/question-card"
 import { QuestionNav } from "@/components/question-nav"
 import { choiceQuestions, judgeQuestions } from "@/lib/questions"
-import { generateExam, calculateScore, saveExamResult } from "@/lib/exam-utils"
+import {
+  generateExam,
+  calculateScore,
+  saveExamResult,
+  EXAM_CHOICE_COUNT,
+} from "@/lib/exam-utils"
 import type { Question, ExamMode } from "@/lib/types"
 import {
   ChevronLeft,
@@ -148,8 +153,9 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
           <div>
             <h1 className="text-2xl font-bold">{modeLabels[mode]}</h1>
             <p className="text-muted-foreground">
-              共 {questions.length} 题
-              {mode === "exam" && "，限时30分钟"}
+              {mode === "exam"
+                ? `共 ${questions.length} 题：先 ${EXAM_CHOICE_COUNT} 道单选题，再 ${questions.length - EXAM_CHOICE_COUNT} 道判断题；限时 30 分钟`
+                : `共 ${questions.length} 题`}
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -219,6 +225,36 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
 
         <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
           <div className="space-y-4">
+            {mode === "exam" && !showResult && (
+              <div
+                className={`rounded-lg border px-4 py-2.5 text-center text-sm font-medium ${
+                  currentIndex < EXAM_CHOICE_COUNT
+                    ? "border-primary/25 bg-primary/5 text-primary"
+                    : "border-primary/30 bg-muted/50 text-foreground"
+                }`}
+              >
+                {currentIndex < EXAM_CHOICE_COUNT ? (
+                  <>
+                    第一部分 · 单选题（第 1–{EXAM_CHOICE_COUNT} 题）
+                  </>
+                ) : (
+                  <>
+                    第二部分 · 判断题（第 {EXAM_CHOICE_COUNT + 1}–{questions.length} 题）
+                  </>
+                )}
+              </div>
+            )}
+            {mode === "exam" &&
+              !showResult &&
+              currentIndex === EXAM_CHOICE_COUNT &&
+              questions.length > EXAM_CHOICE_COUNT && (
+                <div className="relative py-2">
+                  <div className="absolute inset-x-0 top-1/2 border-t border-border" />
+                  <div className="relative mx-auto w-fit bg-background px-3 text-xs font-medium text-muted-foreground">
+                    以下为判断题
+                  </div>
+                </div>
+              )}
             <QuestionCard
               question={currentQuestion}
               index={currentIndex}
@@ -259,6 +295,7 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
               currentIndex={currentIndex}
               showResult={showResult}
               onNavigate={setCurrentIndex}
+              splitAfterIndex={mode === "exam" ? EXAM_CHOICE_COUNT - 1 : undefined}
             />
           </div>
         </div>
