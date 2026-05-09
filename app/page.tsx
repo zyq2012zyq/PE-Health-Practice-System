@@ -70,7 +70,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero 区域：仅用横向裁剪，避免 background-clip 文字与 overflow-hidden 叠加产生整块遮挡 */}
+      {/* Hero：不用 background-clip 渐变字（部分内核会绘制成色块盖住上行），副标题用主题色 */}
       <section className="relative isolate overflow-x-hidden">
         {/* 装饰背景 */}
         <div className="pointer-events-none absolute inset-0 -z-10">
@@ -84,10 +84,13 @@ export default function HomePage() {
               <Sparkles className="h-4 w-4" />
               <span>北京市初中学业水平考试</span>
             </div>
-            <h1 className="mb-6 flex flex-col items-center gap-3 text-balance text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
-              <span className="text-center">体育与健康知识</span>
-              {/* 勿对渐变字使用 block/full-width，否则背景渐变会变成整条色块 */}
-              <span className="text-gradient text-center">在线练习系统</span>
+            <h1 className="mb-6 flex flex-col items-center gap-4 text-center text-balance sm:gap-5">
+              <span className="text-4xl font-bold leading-normal text-foreground sm:text-5xl lg:text-6xl">
+                体育与健康知识
+              </span>
+              <span className="text-4xl font-bold leading-normal text-primary sm:text-5xl lg:text-6xl">
+                在线练习系统
+              </span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty mb-10">
               轻松掌握健康教育、体育文化、体育精神等知识要点，

@@ -220,19 +220,6 @@
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.5), 0 4px 12px -4px rgba(0, 0, 0, 0.3);
 }
 
-/* 渐变文字（单独成行 + isolate，避免与 overflow 组合时出现整块渐变盖住上行） */
-.text-gradient {
-  display: inline-block;
-  max-width: 100%;
-  background-image: linear-gradient(135deg, var(--primary) 0%, oklch(0.65 0.18 200) 100%);
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
-
 /* 进度条动画 */
 .progress-bar {
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
