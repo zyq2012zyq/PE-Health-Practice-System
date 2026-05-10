@@ -30,10 +30,10 @@ export function QuestionCard({
         ]
 
   return (
-    <Card className="overflow-hidden transition-all duration-300">
-      <CardHeader className="bg-muted/50 pb-3">
+    <Card className="card-base">
+      <CardHeader className="bg-muted/40 pb-3">
         <div className="flex items-start gap-3">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground shadow-sm">
             {index + 1}
           </span>
           <div className="flex-1">
@@ -45,7 +45,7 @@ export function QuestionCard({
         </div>
       </CardHeader>
       <CardContent className="pt-4">
-        <div className="grid gap-2">
+        <div className="grid gap-2.5">
           {options.map((option) => {
             const isSelected = selectedAnswer === option.key
             const isCorrectAnswer = question.answer === option.key
@@ -56,27 +56,27 @@ export function QuestionCard({
                 onClick={() => !showResult && onSelect(option.key)}
                 disabled={showResult}
                 className={cn(
-                  "relative flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all",
-                  !showResult && "hover:border-primary hover:bg-primary/5",
-                  !showResult && isSelected && "border-primary bg-primary/10",
-                  showResult && isSelected && isCorrect && "border-green-500 bg-green-50 dark:bg-green-950/30",
-                  showResult && isSelected && !isCorrect && "border-red-500 bg-red-50 dark:bg-red-950/30",
-                  showResult && !isSelected && isCorrectAnswer && "border-green-500 bg-green-50/50 dark:bg-green-950/20",
-                  showResult && !isSelected && !isCorrectAnswer && "opacity-50"
+                  "group relative flex items-center gap-3 rounded-xl border-2 p-4 text-left transition-all duration-200",
+                  !showResult && !isSelected && "hover:border-primary/50 hover:bg-primary/[0.04] hover:shadow-sm",
+                  !showResult && isSelected && "border-primary bg-primary/8 shadow-sm option-selected",
+                  showResult && isSelected && isCorrect && "border-green-500/60 bg-green-50/70 dark:bg-green-950/20",
+                  showResult && isSelected && !isCorrect && "border-red-500/60 bg-red-50/70 dark:bg-red-950/20",
+                  showResult && !isSelected && isCorrectAnswer && "border-green-500/50 bg-green-50/40 dark:bg-green-950/15",
+                  showResult && !isSelected && !isCorrectAnswer && "opacity-40"
                 )}
               >
                 <span
                   className={cn(
-                    "flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 text-sm font-medium",
-                    !showResult && isSelected && "border-primary bg-primary text-primary-foreground",
-                    !showResult && !isSelected && "border-muted-foreground/30",
-                    showResult && isCorrectAnswer && "border-green-500 bg-green-500 text-white",
-                    showResult && isSelected && !isCorrect && "border-red-500 bg-red-500 text-white"
+                    "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-sm font-bold transition-all duration-200",
+                    !showResult && isSelected && "bg-primary text-primary-foreground shadow-sm scale-105",
+                    !showResult && !isSelected && "border-2 border-border bg-transparent text-muted-foreground group-hover:border-primary/50 group-hover:text-primary",
+                    showResult && isCorrectAnswer && "bg-green-500 text-white shadow-sm",
+                    showResult && isSelected && !isCorrect && "bg-red-500 text-white shadow-sm"
                   )}
                 >
                   {option.key}
                 </span>
-                <span className="flex-1">{option.text}</span>
+                <span className="flex-1 text-sm leading-relaxed">{option.text}</span>
                 {showResult && isSelected && (
                   <span className="shrink-0">
                     {isCorrect ? (

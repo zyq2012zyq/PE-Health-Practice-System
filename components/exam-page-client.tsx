@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Header } from "@/components/header"
 import { QuestionCard } from "@/components/question-card"
 import { QuestionNav } from "@/components/question-nav"
+import { triggerConfetti } from "@/components/easter-egg"
 import { choiceQuestions, judgeQuestions } from "@/lib/questions"
 import {
   generateExam,
@@ -102,6 +103,8 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
       totalQuestions: questions.length,
       date: new Date().toISOString(),
     })
+
+    triggerConfetti(result.score, questions.length)
   }, [questions, answers, mode])
 
   const handleReset = useCallback(() => {
