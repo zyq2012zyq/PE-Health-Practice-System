@@ -157,7 +157,7 @@ export default function ExamPageClient({ mode }: ExamPageClientProps) {
             <h1 className="text-2xl font-bold">{modeLabels[mode]}</h1>
             <p className="text-muted-foreground">
               {mode === "exam"
-                ? `共 ${questions.length} 题：先 ${EXAM_CHOICE_COUNT} 道单选题，再 ${questions.length - EXAM_CHOICE_COUNT} 道判断题；限时 ${EXAM_DURATION_MINUTES} 分钟`
+                ? `共 ${questions.length} 题：${EXAM_CHOICE_COUNT} 道单选题，${questions.length - EXAM_CHOICE_COUNT} 道判断题；限时 ${EXAM_DURATION_MINUTES} 分钟`
                 : `共 ${questions.length} 题`}
             </p>
           </div>

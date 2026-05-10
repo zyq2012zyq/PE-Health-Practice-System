@@ -18,7 +18,7 @@ export function Header() {
             alt="体育与健康知识在线练习"
             width={36}
             height={36}
-            className="h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-border"
+            className="h-9 w-9 shrink-0 rounded-lg object-cover ring-1 ring-border"
             priority
           />
           <span className="text-lg font-semibold">体育健康知识练习</span>
