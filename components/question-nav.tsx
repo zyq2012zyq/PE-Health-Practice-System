@@ -53,9 +53,20 @@ export function QuestionNav({
             const isCorrect = showResult && answers[q.id] === q.answer
             const showSplit =
               splitAfterIndex !== undefined && i === splitAfterIndex + 1
+            const showChoiceSplit =
+              splitAfterIndex !== undefined && i === 0
 
             return (
               <Fragment key={q.id}>
+                {showChoiceSplit && (
+                  <div className="col-span-5 flex items-center gap-2 py-1">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="shrink-0 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                      单选题
+                    </span>
+                    <div className="h-px flex-1 bg-border" />
+                  </div>
+                )}
                 {showSplit && (
                   <div className="col-span-5 flex items-center gap-2 py-1">
                     <div className="h-px flex-1 bg-border" />
