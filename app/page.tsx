@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { 
@@ -28,10 +28,45 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export default function HomePage() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const sectionRefs = useRef<(HTMLElement | null)[]>([])
 
   useEffect(() => {
     setMounted(true)
+    
+    const handleScroll = () => {
+      setScrollY(window.scrollY)
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    // 滚动淡入效果
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
+    
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref)
+    })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+    }
   }, [])
+
+  // 计算视差偏移
+  const parallaxOffset1 = scrollY * 0.3
+  const parallaxOffset2 = scrollY * 0.15
+  const heroOpacity = Math.max(0, 1 - scrollY / 600)
 
   return (
     <main className="min-h-screen bg-background">
@@ -78,12 +113,21 @@ export default function HomePage() {
       </nav>
 
       {/* Hero 区域 */}
-      <section className="relative isolate overflow-hidden">
-        {/* 动态背景装饰 */}
+      <section ref={heroRef} className="relative isolate overflow-hidden min-h-[90vh] flex items-center">
+        {/* 动态背景装饰 - 带视差效果 */}
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-secondary/30 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[150px]" />
+          <div 
+            className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] transition-transform duration-100"
+            style={{ transform: `translateY(${parallaxOffset1}px)` }}
+          />
+          <div 
+            className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-secondary/30 rounded-full blur-[120px] transition-transform duration-100"
+            style={{ transform: `translateY(${parallaxOffset2}px)` }}
+          />
+          <div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[150px]"
+            style={{ transform: `translate(-50%, calc(-50% + ${parallaxOffset1 * 0.5}px))` }}
+          />
         </div>
 
         {/* 网格背景 */}
@@ -92,7 +136,7 @@ export default function HomePage() {
           backgroundSize: '60px 60px'
         }} />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-32">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-32 w-full" style={{ opacity: heroOpacity }}>
           <div className="text-center max-w-4xl mx-auto">
             {/* 标签 */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 animate-fade-in-up">
@@ -137,7 +181,10 @@ export default function HomePage() {
       </section>
 
       {/* 考试信息卡片 */}
-      <section className="py-20 bg-secondary/30 relative">
+      <section 
+        ref={(el) => (sectionRefs.current[0] = el)}
+        className="py-20 bg-secondary/30 relative scroll-fade-in"
+      >
         <div className="absolute inset-0 -z-10 opacity-[0.03]" style={{
           backgroundImage: `linear-gradient(to right, oklch(0.145 0.015 285) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.145 0.015 285) 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
@@ -202,7 +249,10 @@ export default function HomePage() {
       </section>
 
       {/* 题型说明 */}
-      <section className="py-20">
+      <section 
+        ref={(el) => (sectionRefs.current[1] = el)}
+        className="py-20 scroll-fade-in"
+      >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">题型介绍</h2>
@@ -270,7 +320,10 @@ export default function HomePage() {
       </section>
 
       {/* 知识分类 */}
-      <section className="py-20 bg-secondary/30 relative">
+      <section 
+        ref={(el) => (sectionRefs.current[2] = el)}
+        className="py-20 bg-secondary/30 relative scroll-fade-in"
+      >
         <div className="absolute inset-0 -z-10 opacity-[0.03]" style={{
           backgroundImage: `linear-gradient(to right, oklch(0.145 0.015 285) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.145 0.015 285) 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
