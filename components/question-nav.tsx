@@ -3,7 +3,7 @@
 import { Fragment } from "react"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle2, Circle, CircleDot } from "lucide-react"
+import { CheckCircle2, Circle, CircleDot, XCircle } from "lucide-react"
 import type { Question } from "@/lib/types"
 
 interface QuestionNavProps {
@@ -97,6 +97,10 @@ export function QuestionNav({
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="h-3 w-3 text-green-500" />
                 <span>正确</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <XCircle className="h-3 w-3 text-red-500" />
+                <span>错误</span>
               </div>
             </>
           )}
