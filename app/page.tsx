@@ -163,7 +163,7 @@ export default function HomePage() {
             {/* 按钮组 */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               <Link href="/exam">
-                <Button size="lg" className="h-14 px-10 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all rounded-full group animate-pulse-glow">
+                <Button size="lg" className="h-14 px-10 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all rounded-full group">
                   <Play className="mr-2 h-5 w-5" />
                   开始模拟考试
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -203,7 +203,7 @@ export default function HomePage() {
               <CardContent className="pt-10 pb-10 text-center relative">
                 <div className="relative mx-auto mb-8">
                   <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/30 transition-all" />
-                  <div className="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/25 group-hover:scale-110 transition-transform">
+                  <div className="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/25">
                     <Clock className="h-10 w-10 text-primary-foreground" />
                   </div>
                 </div>
@@ -218,8 +218,8 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-chart-2/5 to-transparent group-hover:from-chart-2/10 transition-all" />
               <CardContent className="pt-10 pb-10 text-center relative">
                 <div className="relative mx-auto mb-8">
-                  <div className="absolute inset-0 bg-chart-2/20 rounded-full blur-2xl group-hover:bg-chart-2/30 transition-all" />
-                  <div className="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-chart-2 to-chart-2/60 flex items-center justify-center shadow-lg shadow-chart-2/25 group-hover:scale-110 transition-transform">
+                  <div className="absolute inset-0 bg-chart-2/20 rounded-full blur-2xl" />
+                  <div className="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-chart-2 to-chart-2/60 flex items-center justify-center shadow-lg shadow-chart-2/25">
                     <FileText className="h-10 w-10 text-white" />
                   </div>
                 </div>
@@ -234,8 +234,8 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent group-hover:from-success/10 transition-all" />
               <CardContent className="pt-10 pb-10 text-center relative">
                 <div className="relative mx-auto mb-8">
-                  <div className="absolute inset-0 bg-success/20 rounded-full blur-2xl group-hover:bg-success/30 transition-all" />
-                  <div className="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-success to-success/60 flex items-center justify-center shadow-lg shadow-success/25 group-hover:scale-110 transition-transform">
+                  <div className="absolute inset-0 bg-success/20 rounded-full blur-2xl" />
+                  <div className="relative w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-success to-success/60 flex items-center justify-center shadow-lg shadow-success/25">
                     <Trophy className="h-10 w-10 text-white" />
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export default function HomePage() {
               <div className="h-2 bg-gradient-to-r from-primary to-primary/60" />
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:scale-110 transition-all">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10">
                     <CheckCircle className="h-7 w-7 text-primary" />
                   </div>
                   <div>
@@ -293,7 +293,7 @@ export default function HomePage() {
               <div className="h-2 bg-gradient-to-r from-chart-2 to-chart-2/60" />
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-chart-2/20 to-chart-2/10 group-hover:from-chart-2/30 group-hover:scale-110 transition-all">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-chart-2/20 to-chart-2/10">
                     <Target className="h-7 w-7 text-chart-2" />
                   </div>
                   <div>
@@ -338,7 +338,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* 健康教育 */}
             <div className="p-8 rounded-3xl bg-card border border-border/50 shadow-lg card-hover group">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500/20 to-rose-500/5 mb-6 group-hover:scale-110 group-hover:from-rose-500/30 transition-all shadow-lg shadow-rose-500/10">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500/20 to-rose-500/5 mb-6 shadow-lg shadow-rose-500/10">
                 <Heart className="h-8 w-8 text-rose-500" />
               </div>
               <h3 className="font-bold text-xl mb-3 text-foreground">健康教育</h3>
@@ -349,7 +349,7 @@ export default function HomePage() {
 
             {/* 体育文化 */}
             <div className="p-8 rounded-3xl bg-card border border-border/50 shadow-lg card-hover group">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 mb-6 group-hover:scale-110 group-hover:from-blue-500/30 transition-all shadow-lg shadow-blue-500/10">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-500/5 mb-6 shadow-lg shadow-blue-500/10">
                 <Award className="h-8 w-8 text-blue-500" />
               </div>
               <h3 className="font-bold text-xl mb-3 text-foreground">体育文化</h3>
@@ -360,7 +360,7 @@ export default function HomePage() {
 
             {/* 体育精神 */}
             <div className="p-8 rounded-3xl bg-card border border-border/50 shadow-lg card-hover group">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 mb-6 group-hover:scale-110 group-hover:from-amber-500/30 transition-all shadow-lg shadow-amber-500/10">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 mb-6 shadow-lg shadow-amber-500/10">
                 <Zap className="h-8 w-8 text-amber-500" />
               </div>
               <h3 className="font-bold text-xl mb-3 text-foreground">体育精神</h3>
