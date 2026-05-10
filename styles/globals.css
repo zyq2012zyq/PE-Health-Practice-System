@@ -127,11 +127,19 @@
   }
 }
 
-/* 滚动淡入动画 */
+/* GPU 加速优化 */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* 滚动淡入动画 - 优化版 */
 .scroll-fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-fade-in.visible {
@@ -139,83 +147,16 @@
   transform: translateY(0);
 }
 
-.scroll-fade-in.delay-1 { transition-delay: 0.1s; }
-.scroll-fade-in.delay-2 { transition-delay: 0.2s; }
-.scroll-fade-in.delay-3 { transition-delay: 0.3s; }
-
-/* 漂移效果 - 鼠标跟随 */
-.drift-element {
-  transition: transform 0.3s ease-out;
-  will-change: transform;
-}
-
-/* 动画类 */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px oklch(0.55 0.22 250 / 0.3); }
-  50% { box-shadow: 0 0 40px oklch(0.55 0.22 250 / 0.5); }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scale-in 0.3s ease-out forwards;
-}
-
-/* 卡片悬浮效果 - 只保留阴影变化 */
+/* 卡片悬浮效果 */
 .card-hover {
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
 }
 
 .card-hover:hover {
-  box-shadow: 0 16px 48px oklch(0 0 0 / 0.12);
+  transform: translateY(-4px) translateZ(0);
+  box-shadow: 0 20px 40px oklch(0 0 0 / 0.1);
 }
 
 /* 渐变文字 */
@@ -228,111 +169,57 @@
 
 /* 玻璃态效果 */
 .glass {
-  background: oklch(1 0 0 / 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: oklch(1 0 0 / 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
 }
 
 .dark .glass {
-  background: oklch(0.14 0.02 285 / 0.8);
-}
-
-/* 渐变边框 */
-.gradient-border {
-  position: relative;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, oklch(0.55 0.22 250), oklch(0.6 0.18 180));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  background: oklch(0.14 0.02 285 / 0.75);
 }
 
 /* 滚动条美化 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: oklch(0.96 0.01 285);
-  border-radius: 4px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.7 0.1 285);
-  border-radius: 4px;
+  background: oklch(0.7 0.1 285 / 0.4);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.6 0.15 285);
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: oklch(0.2 0.02 285);
+  background: oklch(0.6 0.15 285 / 0.6);
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: oklch(0.35 0.02 285);
+  background: oklch(0.35 0.02 285 / 0.4);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.45 0.02 285);
+  background: oklch(0.45 0.02 285 / 0.6);
 }
 
 /* 选中文字颜色 */
 ::selection {
-  background: oklch(0.55 0.22 250 / 0.3);
+  background: oklch(0.55 0.22 250 / 0.25);
   color: inherit;
 }
 
 /* 平滑滚动 */
 html {
   scroll-behavior: smooth;
-}
-
-/* 漂移/视差效果 */
-[data-parallax] {
-  will-change: transform;
-  transition: transform 0.1s ease-out;
-}
-
-.parallax-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.parallax-bg::before,
-.parallax-bg::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.6;
-  transition: transform 0.5s ease-out;
-}
-
-/* 滚动链接效果 */
-.smooth-scroll-link {
-  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 /* 按钮点击效果 */
 button:active:not(:disabled) {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 /* 链接悬浮效果 */
@@ -346,4 +233,40 @@ a:not([class*="Button"]):hover {
 
 .dark a:not([class*="Button"]):hover {
   color: oklch(0.7 0.18 250);
+}
+
+/* 淡入动画 */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 视差背景容器 */
+.parallax-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.parallax-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  will-change: transform;
 }
